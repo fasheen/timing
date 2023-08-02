@@ -30,7 +30,7 @@ q = """
             and ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) > 0
     """
 names = pysqldf(q)
-names
+#names
 
 #Converting Start and End columns in the data frame from Text to Datetime type
 df['start'] = pd.to_datetime(df['start'], errors='coerce')
