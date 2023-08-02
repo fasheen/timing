@@ -19,11 +19,11 @@ q = """
             , time(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) , 'unixepoch') ends_in
             , (JULIANDAY(end) - JULIANDAY(start)) * 1440 dur
             , ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) mins_to_end
-            , round(1-(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) / ((JULIANDAY(end) - JULIANDAY(start)) * 1440)),2)*100 completed_percent
-          
+            , round(1-(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) / ((JULIANDAY(end) - JULIANDAY(start)) * 1440)),2)*100 completed_percent      
             
         FROM 
             df  
+            
         WHERE
             date=date()
             and ((JULIANDAY(start) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) < 0
@@ -44,11 +44,12 @@ start = names.start.to_string(index=False, header=False)[-5:]
 end = names.end.to_string(index=False, header=False)[-5:]
 ends_in = names.ends_in.to_string(index=False, header=False)[3:]
 comp = names.completed_percent.to_string(index=False, header=False)[:]
+curr_time = names.offset.to_string(index=False, header=False)[10:16]
 
 #df.info()
 
 st.divider()
-st.write(d, "  |  Tiruchirapalli, India")
+st.write(d, " | ",curr_time)
 # Place holder for <Hijri Date>
 st.divider()
 st.header(vakth)
@@ -60,3 +61,4 @@ st.write("[hh : mm]")
 st.write(comp.strip(),"% ")
 st.write("Completed")
 st.divider()
+st.write("Trichy, India")
