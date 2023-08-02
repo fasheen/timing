@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from datetime import date
 from pandasql import sqldf
-from datetime import timedelta
+
 # A quick lambda function, so that you don’t have to pass in global variables every time an object is used
 pysqldf = lambda q: sqldf(q, globals())
 df = pd.read_excel('trz_timing.xlsx')
