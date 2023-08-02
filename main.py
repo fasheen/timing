@@ -12,22 +12,25 @@ q = """
             , vakth
             , start
             , end
-            , DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME') now
-            --, (JULIANDAY(start) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440  mins_since_start
-            --, ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) mins_to_end
-            , time(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) , 'unixepoch') ends_in
+            , DATETIME(CURRENT_TIMESTAMP) now
+            , DATETIME(CURRENT_TIMESTAMP, '+5.5 hours') offset
+            --, (JULIANDAY(start) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440  mins_since_start
+            --, ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) mins_to_end
+            , time(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) , 'unixepoch') ends_in
             , (JULIANDAY(end) - JULIANDAY(start)) * 1440 dur
-            , ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) mins_to_end
-            , round(1-(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) / ((JULIANDAY(end) - JULIANDAY(start)) * 1440)),2)*100 completed_percent
+            , ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) mins_to_end
+            , round(1-(((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) / ((JULIANDAY(end) - JULIANDAY(start)) * 1440)),2)*100 completed_percent
+          
+            
         FROM 
             df  
         WHERE
             date=date()
-            and ((JULIANDAY(start) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) < 0
-            and ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))) * 1440) > 0
+            and ((JULIANDAY(start) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) < 0
+            and ((JULIANDAY(end) - JULIANDAY(DATETIME(CURRENT_TIMESTAMP, '+5.5 hours'))) * 1440) > 0
     """
 names = pysqldf(q)
-#names
+names
 
 #Converting Start and End columns in the data frame from Text to Datetime type
 df['start'] = pd.to_datetime(df['start'], errors='coerce')
@@ -39,9 +42,7 @@ d = date.today().strftime("%B %d, %Y")
 vakth = names.vakth.to_string(index=False, header=False)
 start = names.start.to_string(index=False, header=False)[-5:]
 end = names.end.to_string(index=False, header=False)[-5:]
-#ends_in = (pd.to_datetime(names.end) - pd.Timestamp.now()).to_string()[11:16]
 ends_in = names.ends_in.to_string(index=False, header=False)[3:]
-#vakth_dur = pd.to_datetime(names.end) - pd.to_datetime(names.start)
 comp = names.completed_percent.to_string(index=False, header=False)[:]
 
 #df.info()
