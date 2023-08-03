@@ -7,7 +7,7 @@ st.set_page_config(layout='wide')
 
 # A quick lambda function, so that you don’t have to pass in global variables every time an object is used
 pysqldf = lambda q: sqldf(q, globals())
-df = pd.read_excel('trz_timing.xlsx')
+df = pd.read_excel('trz_timing_2023.xlsx')
 q = """
         SELECT
             date
