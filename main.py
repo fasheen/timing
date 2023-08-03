@@ -95,6 +95,8 @@ with col2:
     """
     """
     st.markdown('<p class="smallfont1">'+ d+' </p>', unsafe_allow_html=True)
+    st.write('<p style="font-size:9px; color:red;">Here is some red text'+'test'+'</p>',
+             unsafe_allow_html=True)
     st.markdown('<p class="smallfont1">'+ curr_time+' </p>', unsafe_allow_html=True)
     # Place holder for <Hijri Date>
     st.divider()
@@ -110,9 +112,7 @@ with col2:
     st.markdown('<p class="smallfont3">'+ "Trichy, India"+' </p>', unsafe_allow_html=True)
     #st.divider()
     st.write('<p style="font-size:26px; color:red;">Here is some red text</p>',
-         unsafe_allow_html=True)
-    st.write('<p style="font-size:9px; color:red;">Here is some red text</p>',
-         unsafe_allow_html=True)
+             unsafe_allow_html=True)
 
 
 
