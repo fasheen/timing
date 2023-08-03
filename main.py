@@ -111,7 +111,8 @@ with col2:
     #st.divider()
     st.write('<p style="font-size:26px; color:red;">Here is some red text</p>',
          unsafe_allow_html=True)
-
+    st.write('<p style="font-size:9px; color:red;">Here is some red text</p>',
+         unsafe_allow_html=True)
 
 
 
